@@ -1,10 +1,20 @@
+
+const newID = (array) => {
+    if (array.length > 0) {
+        return array[array.length-1].id + 1
+    } else {
+        return 1
+    }
+}
+
+
 function MessageApp () {
     this.messages = []
 
     //C
     this.post = function (content) {
         let item = {
-            id: this.messages.length,
+            id: newID(this.messages),
             content: content,
             date: new Date()
         }
@@ -14,18 +24,18 @@ function MessageApp () {
 
     //R
     this.get = function (id) {
-        return this.messages[id]
+        return this.messages.filter(message => message.id === id)[0]
     }
 
     //U
     this.update = function (id, update) {
-        this.messages[id].content = update
-        return this.messages[id]
+        let index = this.messages.findIndex(message => message.id === id )
+        this.messages[index].content = update
     }
 
     //D
     this.delete = function (id) {
-        this.messages.splice(id, 1)
+        this.messages = this.messages.filter(message => message.id != id)
         return this.messages
     }
 
