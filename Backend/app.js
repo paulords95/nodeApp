@@ -1,4 +1,7 @@
 
+import fs from 'fs'
+import path from 'path'
+
 const newID = (array) => {
     if (array.length > 0) {
         return array[array.length-1].id + 1
@@ -10,6 +13,12 @@ const newID = (array) => {
 
 function MessageApp () {
     this.messages = []
+
+    this.filepath() {
+        this.filepath = filepath
+        this.messages = filepath ? this.readFromJson() : []
+    }
+
 
     //C
     this.post = function (content) {
@@ -39,6 +48,15 @@ function MessageApp () {
         return this.messages
     }
 
+
+
+    this.readFromJson () {
+        return JSON.parse(fs.readFileSync(
+            __dirname+path.normalize(this.filepath),"utf8",(err,data) => {
+                if (err) throw err
+            }
+        ))
+    }
 }
 
 
